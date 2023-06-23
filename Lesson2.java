@@ -28,24 +28,21 @@ import java.util.Map;
 
 public class Lesson2 {
     public static void main(String[] args) throws IOException {
-        getRequest1();
-        getRequest2();       
-        processionJson();
-        replacingChar();       
+        Request();     
+        processionJson();      
         getResultSting();      
     }
-    public static void getRequest1() {
-        String str = "{\"name\":\"Ivanov\", \"country\":\"Russia\", \"city\":\"Moscow\", \"age\":\"null\"}";
-        System.out.println(str);
-        str = str
+    public static void Request() {
+        String string = "{\"name\":\"Ivanov\", \"country\":\"Russia\", \"city\":\"Moscow\", \"age\":\"null\"}";
+        System.out.println(string);
+        string = string
                 .replace("{", "")
                 .replace("}", "")
                 .replaceAll("\"", "")
                 .replaceAll(":", "=" );
 
-        String [] ArrStr = str.split(", ");
+        String [] ArrStr = string.split(", ");
         StringBuilder sb = new StringBuilder("");
-//
         for (int i = 0; i < ArrStr.length; i++) {
             String [] ArrStrTemp = ArrStr[i]
                     .replace("[", "")
@@ -62,42 +59,8 @@ public class Lesson2 {
         sb.delete(sb.length()-5, sb.length()-1);
         System.out.println("Задание 1 (1-й вариант): ");
         System.out.println(sb.toString());
-        System.out.println("/n");
     }
 
-    public static void getRequest2() {
-        String sqlStr = "select * from students where ";
-        // создаем и инициализируем карту
-        Map<String, String> map = new HashMap<String, String>();
-        // добавляем ключ/ значение
-        map.put("name", "Ivanov");
-        map.put("country", "Russia");
-        map.put("city", "Moscow");
-        map.put("age", null);
-//        System.out.println(map.toString());
-
-        StringBuilder builder = new StringBuilder();
-
-        for (Map.Entry entry : map.entrySet()) {  // перебор коллекции элементов из Map.Entry
-            if (entry.getKey() == null || entry.getValue() == null) {
-                continue;
-            }
-            builder.append(entry.getKey()).append(" = '").append(entry.getValue()).append("' and ");
-        }
-        if (builder.charAt(builder.length() - 1) == ' ') ;
-        {  // если завершается не <'>, то удаляем 5 значений с конца <' end '>
-            builder.delete(builder.length() - 5, builder.length());  //
-        }
-        String result = builder.toString();
-        System.out.println("Задание 1 (2-й вариант): ");
-        System.out.println(result);              // вывод части запроса where
-        System.out.println(sqlStr.concat(result));  // вывод полного запроса
-        System.out.println("================================");
-    }
-
-
-
-    //* Задание 4: Дана строка: ".3 + 1.56 = " подсчитать результат и добавить к строке
     public static String getResultSting() {
         String s = ".3 + 1.56 = ";
         double a = Double.parseDouble(s.substring(0, 3));
@@ -105,46 +68,6 @@ public class Lesson2 {
         s += Double.toString(a + b);
         System.out.println(s);
         return s;
-    }
-
-
-    //    Задание 3:   Сравнить время выполнения замены символа "а" на "А" любой строки содержащей >1000
-    //    символов средствами String и StringBuilder.
-    private static void replacingChar() {
-        String str = "Банальные, но неопровержимые выводы, а также сделанные на базе интернет-аналитики" +
-                " выводы освещают чрезвычайно интересные особенности картины в целом, однако конкретные" +
-                " выводы, разумеется, представлены в исключительно положительном свете." +
-                " Однозначно, акционеры крупнейших компаний, превозмогая сложившуюся непростую экономическую" +
-                " ситуацию, превращены в посмешище, хотя само их существование приносит несомненную пользу" +
-                " обществу! Значимость этих проблем настолько очевидна, что реализация намеченных плановых" +
-                " заданий влечет за собой процесс внедрения и модернизации экономической целесообразности" +
-                " принимаемых решений. Но семантический разбор внешних противодействий создаёт предпосылки" +
-                " для существующих финансовых и административных условий. Повседневная практика показывает," +
-                " что повышение уровня гражданского сознания однозначно определяет каждого участника как" +
-                " способного принимать собственные решения касаемо модели развития. В частности, укрепление" +
-                " и развитие внутренней структуры создаёт необходимость включения в производственный план" +
-                " целого ряда внеочередных мероприятий с учётом комплекса первоочередных требований." +
-                " Мы вынуждены отталкиваться от того, что постоянное информационно-пропагандистское обеспечение" +
-                " нашей деятельности требует от нас анализа укрепления моральных ценностей.";  // 1289 символов
-        StringBuilder builder = new StringBuilder(str);
-
-        long start = System.currentTimeMillis();
-        for (int i = 0; i < str.length(); i++) {
-            str = str.replace('а','А');
-        }
-//        System.out.println(str);
-        System.out.println("String time = " + (System.currentTimeMillis() - start));
-//
-        start = System.currentTimeMillis();
-        for (int i = 0; i < builder.length(); i++) {
-            if (builder.charAt(i) == 'а') {
-                builder.setCharAt(i, 'А');
-            }
-        }
-//        System.out.println(builder.toString());
-
-        System.out.println("StringBuilder time = " + (System.currentTimeMillis() - start));
-
     }
 
     public static void processionJson() throws IOException {
